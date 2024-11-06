@@ -1,0 +1,94 @@
+/* Updated color scheme for orange theme */
+
+/* Navbar brand */
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Active nav-link */
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #ff7f3f;
+    border-color: #e56d37;
+}
+
+/* Font size for responsiveness */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Borders */
+.border-top, .border-bottom {
+    border-color: #ff7f3f;
+}
+
+/* Box shadow */
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .15);
+}
+
+/* Button and badge colors */
+.badge, .btn-primary, .btn-outline-primary, .btn-warning, .btn-outline-warning,
+.btn-danger, .btn-secondary, .btn-success, .btn-outline-secondary,
+.btn-outline-success {
+    background-color: #ff7f3f;
+    color: white;
+    border-color: #ff7f3f;
+}
+
+/* Primary color for text and backgrounds */
+.text-primary, .bg-primary {
+    color: #ff7f3f !important;
+    background-color: #ff7f3f !important;
+}
+
+/* Secondary and other colors for variety */
+.text-secondary, .bg-secondary {
+    color: #ffb68f !important;
+    background-color: #ffb68f !important;
+}
+
+.text-warning, .bg-warning, .btn-warning, .btn-outline-warning {
+    color: #ff7f3f !important;
+    background-color: #ff7f3f !important;
+    border-color: #ff7f3f;
+}
+
+.btn-outline-primary, .btn-outline-secondary, .btn-outline-success {
+    color: #ff7f3f;
+    border-color: #ff7f3f;
+}
+
+    .btn-outline-primary:hover, .btn-outline-secondary:hover, .btn-outline-success:hover {
+        color: #fff;
+        background-color: #ff7f3f;
+        border-color: #ff7f3f;
+    }
+
+    /* Hover and focus effects for buttons */
+    .btn-primary:hover, .btn-warning:hover, .btn-danger:hover, .btn-secondary:hover, .btn-success:hover,
+    .btn-outline-primary:hover, .btn-outline-warning:hover, .btn-outline-danger:hover,
+    .btn-outline-secondary:hover, .btn-outline-success:hover {
+        color: #fff;
+        background-color: #e56d37;
+        border-color: #e56d37;
+    }
+
+    /* Disabled button states */
+    .btn-primary:disabled, .btn-warning:disabled, .btn-danger:disabled,
+    .btn-secondary:disabled, .btn-success:disabled,
+    .btn-outline-primary:disabled, .btn-outline-warning:disabled,
+    .btn-outline-danger:disabled, .btn-outline-secondary:disabled,
+    .btn-outline-success:disabled {
+        color: #e0e0e0;
+        background-color: #ffb68f;
+        border-color: #ffb68f;
+    }

@@ -1,0 +1,11 @@
+﻿/* Create a new CSS file (e.g., shopping-cart.css) */
+
+.cart-icon {
+    color: white; /* Override potential site.css color */
+}
+
+.orange-button {
+    background-color: #ff7f3f; /* Orange color from theme */
+    color: white; /* Text color for button */
+    border-color: #ff7f3f; /* Border color */
+}
