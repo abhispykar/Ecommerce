@@ -120,8 +120,7 @@ namespace ECommerceOrderManagement.Areas.Identity.Pages.Account
             public string? Street { get; set; }
             [Required]
             public string? City { get; set; }
-            [Required(ErrorMessage = "Zip is Required")]
-            [RegularExpression(@"^\\d{6}$", ErrorMessage = "Invalid Zip")]
+            [Required(ErrorMessage = "Zip is Required")]           
             public string? ZipCode { get; set; }
         }
 

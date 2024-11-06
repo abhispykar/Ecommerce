@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Billing details section -->
+            <div class="col-md-8 mb-4">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">Billing details</h5>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <!-- First and Last name fields -->
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <input type="text" id="firstName" class="form-control" />
+                                        <label class="form-label" for="firstName">First name</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <input type="text" id="lastName" class="form-control" />
+                                        <label class="form-label" for="lastName">Last name</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Company Name field -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="companyName" class="form-control" />
+                                <label class="form-label" for="companyName">Company name</label>
+                            </div>
+
+                            <!-- Address field -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="address" class="form-control" />
+                                <label class="form-label" for="address">Address</label>
+                            </div>
+
+                            <!-- Email field -->
+                            <div class="form-outline mb-4">
+                                <input type="email" id="email" class="form-control" />
+                                <label class="form-label" for="email">Email</label>
+                            </div>
+
+                            <!-- Phone field -->
+                            <div class="form-outline mb-4">
+                                <input type="tel" id="phone" class="form-control" />
+                                <label class="form-label" for="phone">Phone</label>
+                            </div>
+
+                            <!-- Additional Information field -->
+                            <div class="form-outline mb-4">
+                                <textarea id="additionalInfo" class="form-control" rows="3"></textarea>
+                                <label class="form-label" for="additionalInfo">Additional information</label>
+                            </div>
+
+                            <!-- Create an account checkbox -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="createAccount">
+                                <label class="form-check-label" for="createAccount">Create an account?</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary section -->
+            <div class="col-md-4 mb-4">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                Products
+                                <span>$53.98</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                Shipping
+                                <span>Gratis</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                <div>
+                                    <strong>Total amount (including VAT)</strong>
+                                </div>
+                                <span><strong>$53.98</strong></span>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn btn-primary btn-lg btn-block">Make purchase</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

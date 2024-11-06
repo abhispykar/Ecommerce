@@ -67,5 +67,9 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        public IActionResult Summary()
+        {
+            return View();
+        }
     }
 }
