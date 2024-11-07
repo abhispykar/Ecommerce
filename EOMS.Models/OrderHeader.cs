@@ -23,7 +23,7 @@ namespace EOMS.Models
 
         public DateTime DateOfShipping { get; set; }
 
-        public double OrderTotal { get; set; }
+        public decimal OrderTotal { get; set; }
 
         public string? OrderStatus { get; set; }
 
@@ -42,17 +42,16 @@ namespace EOMS.Models
         public DateTime DueDate { get; set; }
 
         [Required]
-        public string Phone { get; set; }
+        public string Address { get; set; }
 
-        public string? ShippingAddressJson { get; set; }
+        [Required]
+        public string City { get; set; }
 
-        // Address property, ignored by EF Core
-        [NotMapped]
-        public Address? Address
-        {
-            get => string.IsNullOrEmpty(ShippingAddressJson) ? null : JsonSerializer.Deserialize<Address>(ShippingAddressJson);
-            set => ShippingAddressJson = JsonSerializer.Serialize(value);
-        }
+        [Required]
+        public string State { get; set; }
+
+        [Required]
+        public string ZipCode { get; set; }
 
         [Required]
         public string Name { get; set; }

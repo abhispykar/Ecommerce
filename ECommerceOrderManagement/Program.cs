@@ -35,6 +35,7 @@ builder.Services.AddExceptionHandler<AppExceptionHandler>();
 // Register ProductRepository as a scoped service instead of a singleton
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 
 var app = builder.Build();
 

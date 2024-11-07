@@ -61,7 +61,7 @@ namespace EOMS.DataAccess.Data
 
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
-                entity.Property(e => e.ShippingAddressJson).HasColumnName("ShippingAddress").HasMaxLength(1024);
+                entity.Property(e => e.Address).HasColumnName("ShippingAddress").HasMaxLength(1024);
             });
         }
     }

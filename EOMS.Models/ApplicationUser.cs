@@ -14,12 +14,13 @@ namespace EOMS.Models
     {
         [Required]
         public string Name { get; set; }
-        // Store Address as JSON
-        public string? ShippingAddressJson { get; set; } 
-        [NotMapped]
-        public Address? ShippingAddress
-        { get => ShippingAddressJson == null ? (Address?)null : JsonSerializer.Deserialize<Address>(ShippingAddressJson); set => ShippingAddressJson = JsonSerializer.Serialize(value); }
 
+        public string? Address {  get; set; }
 
+        public string? City { get; set; }
+
+        public string? State { get; set; }
+
+        public string? ZipCode { get; set; }
     }
 }

@@ -5,7 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -117,10 +119,12 @@ namespace ECommerceOrderManagement.Areas.Identity.Pages.Account
             [Required]
             public string? Name { get; set; }
             [Required]
-            public string? Street { get; set; }
+            public string? State { get; set; }
             [Required]
             public string? City { get; set; }
-            [Required(ErrorMessage = "Zip is Required")]           
+            [Required]
+            public string? Address { get; set; }
+            [Required(ErrorMessage = "Zip is Required")]
             public string? ZipCode { get; set; }
         }
 
@@ -159,7 +163,10 @@ namespace ECommerceOrderManagement.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.Name = Input.Name;
-                user.ShippingAddress = new Address() { City = Input.City, Street = Input.Street, ZipCode = Input.ZipCode };
+                user.State = Input.State;
+                user.City = Input.City;
+                user.ZipCode = Input.ZipCode;
+                user.Address= Input.Address;
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

@@ -9,7 +9,7 @@ namespace EOMS.Models.ViewModels
     public class CartVM
     {
         public IEnumerable<Cart> ListOfCart { get; set; }
-        public decimal Total { get; set; }
+        public OrderHeader OrderHeader{ get; set; }
 
     }
 }
