@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EOMS.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class applicationUserToDb : Migration
+    public partial class orerToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -188,15 +188,10 @@ namespace EOMS.DataAccess.Migrations
                     DateOfOrder = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfShipping = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PaymentStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderStatus = table.Column<int>(type: "int", nullable: false),
                     TrackingNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Carrier = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PaymentIntentId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfPayment = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false),

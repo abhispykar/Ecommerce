@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using EOMS.Utility;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,19 +26,13 @@ namespace EOMS.Models
 
         public decimal OrderTotal { get; set; }
 
-        public string? OrderStatus { get; set; }
+        public OrderStatus OrderStatus { get; set; }
 
-        public string? PaymentStatus { get; set; }
 
         public string? TrackingNumber { get; set; }
 
         public string? Carrier { get; set; }
 
-        public string? SessionId { get; set; }
-
-        public string? PaymentIntentId { get; set; }
-
-        public DateTime DateOfPayment { get; set; }
 
         public DateTime DueDate { get; set; }
 

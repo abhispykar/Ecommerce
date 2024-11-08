@@ -13,5 +13,6 @@ namespace EOMS.DataAccess.Repository.IRepository
         int IncrementCartItem(Cart cart, int count);
         int DecrementCartItem(Cart cart, int count);
         void Delete(Cart cart);
+        void DeleteRange(IEnumerable<Cart> carts);
     }
 }

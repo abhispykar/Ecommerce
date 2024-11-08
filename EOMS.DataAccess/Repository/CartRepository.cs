@@ -25,13 +25,17 @@ namespace EOMS.DataAccess.Repository
 
         public void Delete(Cart cart)
         {
-            _db.Carts.Remove(cart);          
+            _db.Carts.Remove(cart);
         }
 
         public int IncrementCartItem(Cart cart, int count)
         {
             cart.Count += count;
             return cart.Count;
+        }
+        public void DeleteRange(IEnumerable<Cart> carts)
+        {
+            _db.Carts.RemoveRange(carts); 
         }
 
         public void Save()

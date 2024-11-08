@@ -1,4 +1,5 @@
 ﻿using EOMS.Models;
+using EOMS.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace EOMS.DataAccess.Repository.IRepository
     {
         void Update(OrderHeader orderHeader);
 
-        void UpdateStatus(int Id, string orderStatus, string?paymentStatus = null);
+        void UpdateStatus(int Id, string orderStatus);
 
         void Save();
     }

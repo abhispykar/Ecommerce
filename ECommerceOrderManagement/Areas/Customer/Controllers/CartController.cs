@@ -1,9 +1,10 @@
 ﻿using EOMS.DataAccess.Repository.IRepository;
-using EOMS.Models;
 using EOMS.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using EOMS.Utility;
+using EOMS.Models;
 
 namespace ECommerceOrderManagement.Areas.Customer.Controllers
 {
@@ -13,12 +14,16 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
     {
         private ICartRepository _cartRepository;
         private IApplicationUserRepository _applicationUserRepository;
+        private IOrderHeaderRepository _orderHeaderRepository;
+        private IOrderDetailRepository _orderDetailRepository;
         public CartVM vm { get; set; }
 
-        public CartController(ICartRepository cartRepository, IApplicationUserRepository applicationUserRepository)
+        public CartController(ICartRepository cartRepository, IApplicationUserRepository applicationUserRepository, IOrderHeaderRepository orderHeaderRepository, IOrderDetailRepository orderDetailRepository)
         {
             _cartRepository = cartRepository;
             _applicationUserRepository = applicationUserRepository;
+            _orderHeaderRepository = orderHeaderRepository;
+            _orderDetailRepository = orderDetailRepository;
         }
 
         public IActionResult Index()
@@ -29,9 +34,10 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
 
             vm = new CartVM()
             {
-                ListOfCart = _cartRepository.GetAll(x => x.ApplicationUserId == claim.Value, includeProperties: "Product"), OrderHeader  = new EOMS.Models.OrderHeader()
+                ListOfCart = _cartRepository.GetAll(x => x.ApplicationUserId == claim.Value, includeProperties: "Product"),
+                OrderHeader = new EOMS.Models.OrderHeader()
 
-            };          
+            };
 
             foreach (var item in vm.ListOfCart)
             {
@@ -102,5 +108,48 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             return View(vm);
         }
 
+        [HttpPost]
+        public IActionResult Summary(CartVM vm)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            vm.ListOfCart = _cartRepository.GetAll(x => x.ApplicationUserId == claim.Value, includeProperties: "Product");
+            vm.OrderHeader.OrderStatus = OrderStatus.Approved;
+            vm.OrderHeader.DateOfOrder = DateTime.Now;
+            vm.OrderHeader.ApplicationUserId = claim.Value;
+
+            foreach (var item in vm.ListOfCart)
+            {
+                vm.OrderHeader.OrderTotal += (item.Product.Price * item.Count);
+            }
+            _orderHeaderRepository.Add(vm.OrderHeader);
+            _orderHeaderRepository.Save();
+
+            foreach (var item in vm.ListOfCart)
+            {
+                OrderDetail orderDetail = new OrderDetail()
+                {
+                    ProductId = item.ProductId,
+                    OrderHeaderId = vm.OrderHeader.Id,
+                    Count = item.Count,
+                    Price = (double)item.Product.Price
+                };
+                _orderDetailRepository.Add(orderDetail);
+                _orderDetailRepository.Save();
+            }
+
+            _cartRepository.DeleteRange(vm.ListOfCart);
+            _cartRepository.Save();
+
+            // Redirect to an order success page
+            return RedirectToAction("OrderSuccess", new { id = vm.OrderHeader.Id });
+        }
+
+        public IActionResult OrderSuccess(int id)
+        {
+            var order = _orderHeaderRepository.GetT(x => x.Id == id);
+            return View(order); 
+        }
     }
 }

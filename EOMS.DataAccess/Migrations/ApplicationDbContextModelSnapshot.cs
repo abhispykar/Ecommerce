@@ -145,9 +145,6 @@ namespace EOMS.DataAccess.Migrations
                     b.Property<DateTime>("DateOfOrder")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateOfPayment")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("DateOfShipping")
                         .HasColumnType("datetime2");
 
@@ -158,24 +155,11 @@ namespace EOMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrderStatus")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("OrderTotal")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PaymentIntentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SessionId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
                         .IsRequired()

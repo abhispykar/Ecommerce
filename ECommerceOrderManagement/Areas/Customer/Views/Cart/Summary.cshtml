@@ -1,4 +1,5 @@
 ﻿@model EOMS.Models.ViewModels.CartVM
+<form method="post">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,7 +111,7 @@
                                 <span class="summary-price"><strong>@Model.OrderHeader.OrderTotal.ToString()</strong></span>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-primary btn-lg btn-block">Make purchase</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Make purchase</button>
                     </div>
                 </div>
             </div>
@@ -121,3 +122,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+</form>

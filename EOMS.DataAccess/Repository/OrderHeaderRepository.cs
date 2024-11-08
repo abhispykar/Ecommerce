@@ -1,6 +1,7 @@
 ﻿using EOMS.DataAccess.Data;
 using EOMS.DataAccess.Repository.IRepository;
 using EOMS.Models;
+using EOMS.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,16 +29,13 @@ namespace EOMS.DataAccess.Repository
             _db.SaveChanges();
         }
 
-        public void UpdateStatus(int Id, string orderStatus, string? paymentStatus = null)
+        public void UpdateStatus(int Id, string orderStatus)
         {
             var order = _db.OrderHeaders.FirstOrDefault(x => x.Id == Id);
-            if (order == null)
+            if (order != null && Enum.TryParse(orderStatus, out OrderStatus parsedStatus))
             {
-                order.OrderStatus = orderStatus;
-            }
-            if (paymentStatus != null) 
-            {
-                order.PaymentStatus = paymentStatus;
+                order.OrderStatus = parsedStatus;
+                _db.SaveChanges();
             }
         }
     }
