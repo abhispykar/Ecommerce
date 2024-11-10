@@ -24,6 +24,11 @@ namespace EOMS.DataAccess.Repository
             _db.OrderHeaders.Update(orderHeader);
         }
 
+        public OrderHeader Get(int orderId) 
+        {
+            return _db.OrderHeaders.FirstOrDefault(o => o.Id == orderId);
+        }
+
         public void Save()
         {
             _db.SaveChanges();

@@ -14,6 +14,8 @@ namespace EOMS.DataAccess.Repository.IRepository
 
         void UpdateStatus(int Id, string orderStatus);
 
+        OrderHeader Get(int orderId);
+
         void Save();
     }
 }

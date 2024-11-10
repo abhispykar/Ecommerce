@@ -28,12 +28,6 @@ namespace EOMS.Models
 
         public OrderStatus OrderStatus { get; set; }
 
-
-        public string? TrackingNumber { get; set; }
-
-        public string? Carrier { get; set; }
-
-
         public DateTime DueDate { get; set; }
 
         [Required]
@@ -51,6 +45,7 @@ namespace EOMS.Models
         [Required]
         public string Name { get; set; }
 
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
 
     }

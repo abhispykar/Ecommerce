@@ -96,17 +96,20 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
+ 
             var orders = _orderHeaderRepository.GetAll(
                 x => x.ApplicationUserId == claim.Value,
-                includeProperties: "OrderDetails");
+                includeProperties: "ApplicationUser");
+
 
             var orderList = orders.Select(o => new OrderVM
             {
                 OrderHeader = o,
                 OrderDetails = _orderDetailRepository.GetAll(d => d.OrderHeaderId == o.Id, includeProperties: "Product")
-            });
+            }).ToList();
 
             return View(orderList);
         }
+
     }
 }

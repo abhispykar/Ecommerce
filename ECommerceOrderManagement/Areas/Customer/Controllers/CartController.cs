@@ -142,7 +142,6 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             _cartRepository.DeleteRange(vm.ListOfCart);
             _cartRepository.Save();
 
-            // Redirect to an order success page
             return RedirectToAction("OrderSuccess", new { id = vm.OrderHeader.Id });
         }
 

@@ -11,6 +11,7 @@ namespace EOMS.Utility
         Pending,
         Processed,
         Approved,
+        Shipped,
         Cancelled,
         Delivered
     }
