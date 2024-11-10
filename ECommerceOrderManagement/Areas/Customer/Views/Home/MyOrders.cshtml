@@ -1,0 +1,15 @@
+﻿@model IEnumerable<EOMS.Models.ViewModels.OrderVM>
+
+<h2>My Orders</h2>
+@foreach (var order in Model)
+{
+    <h4>Order #: @order.OrderHeader.Id</h4>
+    <p>Status: @order.OrderHeader.OrderStatus</p>
+    <ul>
+        @foreach (var detail in order.OrderDetails)
+        {
+            <li>Product: @detail.Product.Name - Quantity: @detail.Count - Price: @detail.Price</li>
+        }
+    </ul>
+    <hr />
+}

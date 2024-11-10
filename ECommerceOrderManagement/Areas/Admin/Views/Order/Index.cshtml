@@ -1,0 +1,62 @@
+﻿@model IEnumerable<EOMS.Models.ViewModels.OrderVM>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Orders</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .btn-custom-processed {
+            background-color: #ffc107; /* Custom yellow color for visibility */
+            color: #343a40; /* Dark text color */
+            border: 1px solid #ffc107; /* Border to match background */
+        }
+
+            .btn-custom-processed:hover {
+                background-color: #e0a800; /* Darker shade on hover */
+                color: #fff; /* White text color on hover */
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">All Orders</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Order #</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.OrderHeader.Id</td>
+                            <td>@order.OrderHeader.ApplicationUser.Name</td>
+                            <td>@order.OrderHeader.OrderTotal.ToString("C", new System.Globalization.CultureInfo("en-IN"))</td>
+                            <td>@order.OrderHeader.OrderStatus</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Processed" class="btn btn-sm btn-custom-processed">Mark Processed</a>
+                                    <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Shipped" class="btn btn-sm btn-primary">Mark Shipped</a>
+                                    <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Delivered" class="btn btn-sm btn-success">Mark Delivered</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
