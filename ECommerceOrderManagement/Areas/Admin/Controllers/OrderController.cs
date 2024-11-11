@@ -42,8 +42,9 @@ namespace ECommerceOrderManagement.Areas.Admin.Controllers
 
             var allowedTransitions = new Dictionary<OrderStatus, OrderStatus>
 {
-    { OrderStatus.Processed, OrderStatus.Shipped },
-    { OrderStatus.Shipped, OrderStatus.Delivered }
+                { OrderStatus.Approved, OrderStatus.Processed },
+                { OrderStatus.Processed, OrderStatus.Shipped },
+                { OrderStatus.Shipped, OrderStatus.Delivered }
 };
             if (allowedTransitions.TryGetValue(order.OrderStatus, out OrderStatus nextStatus) && nextStatus.ToString() == status)
             {
