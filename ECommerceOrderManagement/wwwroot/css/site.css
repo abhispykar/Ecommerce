@@ -92,3 +92,7 @@ html {
         background-color: #ffb68f;
         border-color: #ffb68f;
     }
+
+    .toast-error {
+    background-color: #dc3545 !important; /* Red background for error */
+    color: white !important; /* White text */

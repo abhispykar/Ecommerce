@@ -53,7 +53,7 @@ namespace ECommerceOrderManagement.Areas.Admin.Controllers
             }
             else
             {
-                TempData["Error"] = $"Invalid status transition from '{order.OrderStatus}' to '{status}'.";
+                TempData["error"] = " Invalid status transition";               
             }
             return RedirectToAction(nameof(Index));
         }
