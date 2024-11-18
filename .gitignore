@@ -49,3 +49,8 @@ artifacts/
 *.exe
 *.obj
 *.pdb
+*.png
+*.jpeg
+*.jpg
+*.webp
+*.jfif

@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ECommerceOrderManagement</title>
+    @{
+        ViewData["Title"] = "Ecommerce";
+    }
+    <title>@ViewData["Title"] - Coditas App</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/ECommerceOrderManagement.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -69,6 +72,12 @@
                             </li>
                         }
                     </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit">
+                            <i class="bi bi-search"></i> <!-- Bootstrap Icons search icon -->
+                        </button>
+                    </form>
                     <partial name="_LoginPartial" />
                 </div>
             </div>

@@ -28,6 +28,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddSignalR(options =>
+{
+    options.KeepAliveInterval = TimeSpan.FromSeconds(15); // Ping every 15 seconds
+    options.ClientTimeoutInterval = TimeSpan.FromSeconds(30); // Timeout after 30 seconds
+});
 builder.Services.AddRazorPages();
 builder.Logging.ClearProviders(); // Clear default logging providers
 builder.Logging.AddNLog("NLog.config"); // Add NLog using the configuration file
@@ -72,5 +77,8 @@ app.MapAreaControllerRoute(
     areaName: "Customer",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"
 );
-
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<OrderStatusChangedHub>("/orderStatusHub");
+});
 app.Run();

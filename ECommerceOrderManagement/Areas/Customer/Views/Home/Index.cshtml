@@ -2,38 +2,52 @@
 <div class="container-fluid">
     <!-- Hero Section with Banner Images -->
     <section class="hero-section bg-light py-5">
-            <h1 class="display-4 text-center mb-4">Welcome to Ride It Out</h1>
-            <div class="row mt-4">
-                <div class="col-md-8 offset-md-2">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Search for products..." aria-label="Search for products">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">Search</button>
-                        </div>
-                    </div>
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1." class="active"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2."></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3."></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/images/HP_Rotating_AP_18Nov2024_vithxu.webp" class="d-block w-100" alt="Banner 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/images/HP_Rotating_Geyser_18Nov2024_uo8tu3.webp" class="d-block w-100" alt="Banner 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/images/HP_Rotating_pixel_18Nov2024_pfayfv.webp" class="d-block w-100" alt="Banner 3">
                 </div>
             </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
     </section>
     <!-- Products Section -->
     <section class="trending-products py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-4">Products</h2>
-            <div class="row">
+            <div class="d-flex flex-wrap justify-content-center">
                 @foreach (var product in Model)
                 {
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100">
-                            <img src="@product.ImageUrl" class="card-img-top" alt="Product" style="height: 200px; object-fit: cover;">
+                    <a asp-action="Details" asp-controller="Home" asp-route-ProductId="@product.ProductId" class="card card-hover m-2 p-3" style="text-decoration:none">
+                        <div class="" style="width:12rem;">
+                            <img src="@product.ImageUrl" class="card-img-top" alt="Product" style="object-fit: cover;">
                             <div class="card-body d-flex flex-column">
                                 <p class="card-title h5 text-dark text-uppercase text-center mb-3 text-truncate">@product.Name</p>
                                 <p class="card-title h5 text-dark text-center mb-3">₹ @product.Price</p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a asp-action="Details" asp-controller="Home" asp-route-ProductId="@product.ProductId" class="btn btn-primary">Details</a>
                                     <small class="text-muted">⭐⭐⭐⭐⭐</small>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 }
             </div>
         </div>
@@ -86,3 +100,15 @@
     </section>
 </div>
 
+@section Scripts {
+    <style>
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            }
+    </style>
+}

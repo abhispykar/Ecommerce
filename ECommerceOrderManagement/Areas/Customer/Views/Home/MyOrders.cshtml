@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EOMS.Models.ViewModels.OrderVM>
+﻿@model List<EOMS.Models.ViewModels.OrderVM>
 
 <div class="container mt-5">
     <h2 class="mb-4">My Orders</h2>
@@ -19,7 +19,7 @@
                         <td>@order.OrderHeader.Id</td>
                         <td>@order.OrderHeader.ApplicationUser.Name</td>
                         <td>@order.OrderHeader.OrderTotal.ToString("C", new System.Globalization.CultureInfo("en-IN"))</td>
-                        <td>@order.OrderHeader.OrderStatus</td>
+                        <td id="ProductId+@order.OrderHeader.Id">@order.OrderHeader.OrderStatus</td>
                         <td>
                         </td>
                     </tr>
@@ -28,3 +28,22 @@
         </table>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/orderStatusHub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+        debugger
+    connection.on("ReceiveStatusUpdate", function (status,orderItemId) {
+        alert("Your Order  status has been updated to: " + status);
+        document.getElementById("ProductId+"+orderItemId).textContent = status;
+       
+    });
+
+    connection.start().catch(function (err) {
+        return Console.error(err.toString());
+    });
+    </script>
