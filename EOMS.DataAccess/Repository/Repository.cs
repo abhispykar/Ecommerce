@@ -81,6 +81,22 @@ namespace EOMS.DataAccess.Repository
                 { 
                     query = query.Include(property); 
                 }
-            } return query.FirstOrDefault(); }
+            } return query.FirstOrDefault(); 
+        }
+
+        public T GetFirstOrDefault(Expression<Func<T, bool>> predicate, string? includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+            query = query.Where(predicate);
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(property);
+                }
+            }
+            return query.FirstOrDefault();
+        }
     }
 }

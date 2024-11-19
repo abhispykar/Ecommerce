@@ -9,7 +9,7 @@ using EOMS.Models;
 namespace ECommerceOrderManagement.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    [Authorize]
+    [Authorize(Roles = SD.Role_Customer)]
     public class CartController : Controller
     {
         private ICartRepository _cartRepository;

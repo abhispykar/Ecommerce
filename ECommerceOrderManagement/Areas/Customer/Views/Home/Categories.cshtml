@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Category>
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Browse Categories</h2>
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-uppercase">@category.Name</h5>
+                        <a asp-action="ProductsByCategory" asp-route-categoryId="@category.Id"
+                           class="btn btn-primary">View Products</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

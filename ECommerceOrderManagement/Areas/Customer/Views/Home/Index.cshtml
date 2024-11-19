@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<Product>
 <div class="container-fluid">
     <!-- Hero Section with Banner Images -->
-    <section class="hero-section bg-light py-5">
+      <section class="hero-section bg-light py-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1." class="active"></li>
-                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2."></li>
-                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3."></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -28,11 +28,24 @@
                 <span class="visually-hidden">Next</span>
             </a>
         </div>
+    </section> 
+
+    <!-- Categories Section -->
+    <section class="categories py-5">
+        <div class="container text-center">
+            <h2 class="mb-4">Shop by Categories</h2>
+            <a asp-action="Categories" asp-controller="Home" class="btn btn-outline-primary btn-lg">
+                Explore Categories
+            </a>
+        </div>
     </section>
+
+    
+
     <!-- Products Section -->
     <section class="trending-products py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-4">Products</h2>
+            <h2 class="text-center mb-4">Shop by Products</h2>
             <div class="d-flex flex-wrap justify-content-center">
                 @foreach (var product in Model)
                 {

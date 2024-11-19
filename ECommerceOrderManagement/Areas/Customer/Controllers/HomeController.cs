@@ -19,7 +19,7 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
         private readonly IOrderDetailRepository _orderDetailRepository;
         private readonly ICartRepository _cartRepository;
 
-        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ICartRepository cartRepository, IOrderHeaderRepository orderHeaderRepository,IOrderDetailRepository orderDetailRepository
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ICartRepository cartRepository, IOrderHeaderRepository orderHeaderRepository, IOrderDetailRepository orderDetailRepository
             )
         {
             _logger = logger;
@@ -96,7 +96,7 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
- 
+
             var orders = _orderHeaderRepository.GetAll(
                 x => x.ApplicationUserId == claim.Value,
                 includeProperties: "ApplicationUser");
@@ -109,6 +109,27 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             }).ToList();
 
             return View(orderList);
+        }
+
+        public IActionResult Categories()
+        {
+            IEnumerable<Category> categories = _categoryRepository.GetAll();
+            return View(categories);
+        }
+
+        public IActionResult ProductsByCategory(int categoryId)
+        {
+      
+            var productList = _productRepository.GetAll(
+                predicate: product => product.CategoryId == categoryId,
+                includeProperties: "Category");
+
+          
+            var selectedCategory = _categoryRepository.GetFirstOrDefault(
+                c => c.Id == categoryId);
+
+            ViewBag.SelectedCategoryName = selectedCategory?.Name ?? "Products";
+            return View("Products", productList);
         }
 
     }

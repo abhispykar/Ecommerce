@@ -15,6 +15,8 @@ namespace EOMS.DataAccess.Repository.IRepository
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entity);
 
+        T GetFirstOrDefault(Expression<Func<T, bool>> predicate, string? includeProperties = null);
+
         T GetT(Expression<Func<T, bool>> filter, string? includeProperties = null);
     }
 }

@@ -1,125 +1,93 @@
 ﻿@model EOMS.Models.ViewModels.CartVM
 <form method="post">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shipping Details</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        /* Positioning the summary card */
-        .summary-card {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 35%; /* Increased width */
-            z-index: 1;
-        }
-
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1rem; /* Increased font size for better readability */
-        }
-
-        .product-details {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .summary-price {
-            font-weight: bold;
-            color: #333;
-            white-space: nowrap;
-        }
-
-        .summary-header {
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-5 position-relative">
-        <div class="row">
-            <!-- Billing details section -->
-            <div class="col-md-8 mb-4">
-                <div class="card mb-4">
-                    <div class="card-header py-3">
-                        <h5 class="mb-0">Shipping details</h5>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <!-- Name fields -->
-                            <div class="row mb-4">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <input type="text" asp-for="@Model.OrderHeader.Name" class="form-control" />
-                                        <label class="form-label" for="Name">Name</label>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shipping Details</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/site.css">
+    </head>
+    <body>
+        <div class="container mt-5 position-relative">
+            <div class="row">
+                <!-- Billing details section -->
+                <div class="col-md-8 mb-4">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <h5 class="mb-0">Shipping details</h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <!-- Name fields -->
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input type="text" asp-for="@Model.OrderHeader.Name" class="form-control" />
+                                            <label class="form-label" for="Name">Name</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Address field -->
-                            <div class="form-outline mb-4">
-                                <input type="text" asp-for="@Model.OrderHeader.Address" class="form-control" />
-                                <label class="form-label" for="Address">Address</label>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <input type="text" asp-for="@Model.OrderHeader.City" class="form-control" />
-                                <label class="form-label" for="City">City</label>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <input type="text" asp-for="@Model.OrderHeader.State" class="form-control" />
-                                <label class="form-label" for="State">State</label>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <input type="text" asp-for="@Model.OrderHeader.ZipCode" class="form-control" />
-                                <label class="form-label" for="Postal Code">Postal Code</label>
-                            </div>
-                        </form>
+                                <!-- Address field -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="@Model.OrderHeader.Address" class="form-control" />
+                                    <label class="form-label" for="Address">Address</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="@Model.OrderHeader.City" class="form-control" />
+                                    <label class="form-label" for="City">City</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="@Model.OrderHeader.State" class="form-control" />
+                                    <label class="form-label" for="State">State</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="@Model.OrderHeader.ZipCode" class="form-control" />
+                                    <label class="form-label" for="Postal Code">Postal Code</label>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Summary section with floating positioning -->
-            <div class="col-md-4 mb-4 summary-card">
-                <div class="card mb-4">
-                    <div class="card-header py-3">
-                        <h5 class="mb-0">Summary</h5>
-                    </div>
-                    <div class="card-body">
+                <!-- Summary section with floating positioning -->
+                <div class="col-md-4 mb-4 summary-card">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <h5 class="mb-0">Summary</h5>
+                        </div>
+                        <div class="card-body">
                             <ul class="list-group list-group-flush">
-                            @foreach (var details in Model.ListOfCart)
-                            {
-                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                    <div class="product-details">
-                                        <span>@details.Product.Name</span>
-                                        <span>QTY: @details.Count</span>
-                                        <span class="summary-price">@((details.Product.Price * details.Count).ToString("C", new System.Globalization.CultureInfo("en-IN")))</span>
-                                    </div>
-                                </li>
-                            }
+                                @foreach (var details in Model.ListOfCart)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        <div class="product-details">
+                                            <span>@details.Product.Name</span>
+                                            <span>QTY: @details.Count</span>
+                                            <span class="summary-price">@((details.Product.Price * details.Count).ToString("C", new System.Globalization.CultureInfo("en-IN")))</span>
+                                        </div>
+                                    </li>
+                                }
                             </ul>
-                        
-                        <ul class="list-group list-group-flush">                                                    
-                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                                <div class="summary-header">
-                                    Total amount
-                                </div>
-                                <span class="summary-price"><strong>@Model.OrderHeader.OrderTotal.ToString()</strong></span>
-                            </li>
-                        </ul>
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Make purchase</button>
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                    <div class="summary-header">
+                                        Total amount
+                                    </div>
+                                    <span class="summary-price"><strong>@Model.OrderHeader.OrderTotal.ToString()</strong></span>
+                                </li>
+                            </ul>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Make purchase</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
 </html>
 </form>

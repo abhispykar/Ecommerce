@@ -46,11 +46,13 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart3"></i></a>
-                        </li>
+                        
                         @if (User.Identity.IsAuthenticated && !User.IsInRole(SD.Role_Admin))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart3"></i></a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="MyOrders">View Orders</a>
                             </li>
@@ -58,18 +60,9 @@
                         </li>
                         @if (User.IsInRole(SD.Role_Admin))
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Manage
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="Index">Product</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a> </li>
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a> </li>
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a> </li>
                         }
                     </ul>
                     <form class="d-flex">
