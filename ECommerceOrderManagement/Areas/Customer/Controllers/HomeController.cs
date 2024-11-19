@@ -119,17 +119,30 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
 
         public IActionResult ProductsByCategory(int categoryId)
         {
-      
+
             var productList = _productRepository.GetAll(
                 predicate: product => product.CategoryId == categoryId,
                 includeProperties: "Category");
 
-          
+
             var selectedCategory = _categoryRepository.GetFirstOrDefault(
                 c => c.Id == categoryId);
 
             ViewBag.SelectedCategoryName = selectedCategory?.Name ?? "Products";
             return View("Products", productList);
+        }
+
+        public IActionResult Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return View("SearchResults", new List<Product>()); 
+            }
+            var results = _productRepository.GetAll(
+                p => p.Name.Contains(query),
+                includeProperties: "Category");
+
+            return View("SearchResults", results);
         }
 
     }

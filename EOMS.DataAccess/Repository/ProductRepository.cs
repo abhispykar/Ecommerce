@@ -2,6 +2,7 @@
 using EOMS.DataAccess.Data;
 using EOMS.DataAccess.Repository.IRepository;
 using EOMS.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,13 @@ namespace EOMS.DataAccess.Repository
                     objFromDb.ImageUrl = obj.ImageUrl;  
                 }
             }
+        }
+        public IEnumerable<Product> SearchProducts(string query)
+        {
+            return _db.Products
+                .Where(p => p.Name.Contains(query) || p.Name.Contains(query))
+                .Include(p => p.Category)
+                .ToList();
         }
         public void Save()
         {

@@ -9,6 +9,7 @@ namespace EOMS.DataAccess.Repository.IRepository
 {
     public interface IProductRepository : IRepository<Product>
     {
+        IEnumerable<Product> SearchProducts(string query);
         void Update(Product obj);
         void Save();
     }

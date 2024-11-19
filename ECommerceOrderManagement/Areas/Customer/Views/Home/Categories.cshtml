@@ -1,19 +1,67 @@
 ﻿@model IEnumerable<Category>
 
-<div class="container py-5">
-    <h2 class="text-center mb-4">Browse Categories</h2>
-    <div class="row">
-        @foreach (var category in Model)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-uppercase">@category.Name</h5>
-                        <a asp-action="ProductsByCategory" asp-route-categoryId="@category.Id"
-                           class="btn btn-primary">View Products</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Categories</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- Font Awesome for icons -->
+    <style>
+        .card-custom {
+            background-color: #e0f7fa; /* Light blue background */
+            border: 1px solid #0097a7; /* Darker blue border */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+            border-radius: 0; /* Square corners */
+        }
+
+            .card-custom:hover {
+                transform: translateY(-10px); /* Raise card on hover */
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+            }
+
+        .btn-custom {
+            background-color: #6c757d; /* Grey button color */
+            color: #fff; /* White text color */
+            border: none; /* Remove border */
+        }
+
+            .btn-custom:hover {
+                background-color: #5a6268; /* Darker grey on hover */
+            }
+
+        h2.title {
+            font-size: 2rem; /* Change font size */
+            font-family: 'Arial', sans-serif; /* Change font */
+            color: #333; /* Darker text color */
+            text-align: center; /* Center align */
+            font-weight: bold; /* Bold text */
+            background-color: #e9ecef; /* Light grey background */
+            padding: 10px; /* Padding around text */
+            border-radius: 5px; /* Rounded corners */
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h2 class="title mb-4">Browse Categories</h2>
+        <div class="row">
+            @foreach (var category in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-uppercase">@category.Name</h5>
+                            <a asp-action="ProductsByCategory" asp-route-categoryId="@category.Id" class="btn btn-custom">
+                                View Products
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-</div>
+</body>
+</html>

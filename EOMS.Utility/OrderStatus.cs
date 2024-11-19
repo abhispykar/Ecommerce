@@ -9,10 +9,10 @@ namespace EOMS.Utility
     public enum OrderStatus
     {
         Pending,
-        Processed,
         Approved,
+        Processed,
         Shipped,
-        Cancelled,
-        Delivered
+        Delivered,
+        Cancelled
     }
 }

@@ -9,36 +9,76 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/site.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- Font Awesome for icons -->
+    <style>
+        .card {
+            padding: 10px;
+            margin: 10px;
+            background-color: #f8f9fa; /* Light grey background */
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card-header {
+            background-color: #e9ecef; /* Slightly darker grey for header */
+            color: #333; /* Darker text color */
+        }
+
+            .card-header h5 {
+                font-size: 1.25rem; /* Highlight the heading */
+                font-weight: bold;
+            }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+
+        h2.title {
+            font-size: 2.5rem; /* Change font size */
+            font-family: 'Arial', sans-serif; /* Change font */
+            color: #333; /* Darker text color */
+            text-align: center; /* Center align */
+            font-weight: bold; /* Bold text */
+            background-color: #e9ecef; /* Light grey background */
+            padding: 10px; /* Padding around text */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .btn-group .btn i {
+            font-size: 1.25rem; /* Larger icons */
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="mb-4">All Orders</h2>
+        <h2 class="title mb-4">All Orders</h2>
         <div class="row">
             @foreach (var order in Model)
             {
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title">Order #@order.OrderHeader.Id</h5>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><strong>Customer:</strong> @order.OrderHeader.ApplicationUser.Name</p>
-                                <p class="card-text"><strong>Total:</strong> @order.OrderHeader.OrderTotal.ToString("C", new System.Globalization.CultureInfo("en-IN"))</p>
-                                <p class="card-text"><strong>Status:</strong> @order.OrderHeader.OrderStatus</p>
-                                <div class="btn-group" role="group">
-                                    <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Processed" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-cog"></i> Processed
-                                    </a>
-                                    <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Shipped" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-shipping-fast"></i> Shipped
-                                    </a>
-                                    <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Delivered" class="btn btn-sm btn-success">
-                                        <i class="fas fa-box"></i> Delivered
-                                    </a>
-                                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Order No. @order.OrderHeader.Id</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Customer:</strong> @order.OrderHeader.ApplicationUser.Name</p>
+                            <p class="card-text"><strong>Total:</strong> @order.OrderHeader.OrderTotal.ToString("C", new System.Globalization.CultureInfo("en-IN"))</p>
+                            <p class="card-text"><strong>Status:</strong> @order.OrderHeader.OrderStatus</p>
+                            <div class="btn-group" role="group">
+                                <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Processed" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-cog"></i> Processed
+                                </a>
+                                <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Shipped" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-shipping-fast"></i> Shipped
+                                </a>
+                                <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Delivered" class="btn btn-sm btn-success">
+                                    <i class="fas fa-box"></i> Delivered
+                                </a>
+                                <a asp-action="UpdateStatus" asp-route-orderId="@order.OrderHeader.Id" asp-route-status="Cancelled" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-times"></i> Cancelled
+                                </a>
                             </div>
                         </div>
                     </div>
+                </div>
             }
         </div>
     </div>
