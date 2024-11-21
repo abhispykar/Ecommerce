@@ -15,12 +15,16 @@ namespace EOMS.Models
         [Required]
         public string Name { get; set; }
 
+        [MaxLength(50)]
         public string? Address {  get; set; }
 
+        [MaxLength(50)]
         public string? City { get; set; }
 
+        [MaxLength(50)]
         public string? State { get; set; }
 
+        [MaxLength(10)]
         public string? ZipCode { get; set; }
     }
 }

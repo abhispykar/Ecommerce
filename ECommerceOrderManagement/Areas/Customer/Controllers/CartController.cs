@@ -132,6 +132,20 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
+            // Retrieve the current user's application user object
+            var applicationUser = _applicationUserRepository.GetT(x => x.Id == claim.Value);
+
+            // Update the user's address
+            applicationUser.Address = vm.OrderHeader.Address;
+            applicationUser.City = vm.OrderHeader.City;
+            applicationUser.State = vm.OrderHeader.State;
+            applicationUser.ZipCode = vm.OrderHeader.ZipCode;
+
+            // Save the updated address in the database
+            _applicationUserRepository.Update(applicationUser);
+            _applicationUserRepository.Save();
+
+            // Proceed with placing the order
             vm.ListOfCart = _cartRepository.GetAll(x => x.ApplicationUserId == claim.Value, includeProperties: "Product");
             vm.OrderHeader.OrderStatus = OrderStatus.Approved;
             vm.OrderHeader.DateOfOrder = DateTime.Now;
@@ -157,11 +171,13 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
                 _orderDetailRepository.Save();
             }
 
+            // Clear the cart
             _cartRepository.DeleteRange(vm.ListOfCart);
             _cartRepository.Save();
 
             return RedirectToAction("OrderSuccess", new { id = vm.OrderHeader.Id });
         }
+
 
         public IActionResult OrderSuccess(int id)
         {

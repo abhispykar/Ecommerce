@@ -88,7 +88,7 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
                     _cartRepository.IncrementCartItem(cartItem, cart.Count);
                 }
                 _cartRepository.Save();
-                return RedirectToAction("Index");
+                TempData["success"] = "Added to Cart";
             }
 
             cart.Product = _productRepository.GetT(x => x.ProductId == cart.ProductId, includeProperties: "Category");
