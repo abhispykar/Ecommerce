@@ -3,48 +3,50 @@
     <div class="container h-100 py-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-10">
-
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="fw-normal mb-0">Shopping Cart</h3>
                 </div>
 
-                @foreach (var item in Model.ListOfCart)
-                {
-                    <div class="card rounded-3 mb-4">
-                        <div class="card-body p-4">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img src="@item.Product.ImageUrl" class="img-fluid rounded-3" alt="@item.Product.Name">
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="lead fw-normal mb-2">@item.Product.Name</p>
-                                </div>
-                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0">@item.Product.Price</h5>x<h5 class="mb-0">@item.Count</h5>
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-3 d-flex">
-                                    <a asp-action="plus" asp-route-id="@item.Id"class="btn btn-link px-2">
-                                        <i class="bi bi-node-plus-fill"></i>
-                                    </a>
-                                    <a asp-action="minus" asp-route-id="@item.Id" class="btn btn-link px-2">
-                                        <i class="bi bi-node-minus-fill"></i>
-                                    </a>
-
-                                    <a asp-action="delete" asp-route-id="@item.Id" class="btn btn-link px-2">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </a>
+                <div class="cart-container">
+                    @foreach (var item in Model.ListOfCart)
+                    {
+                        <div class="card rounded-3 mb-4">
+                            <div class="card-body p-4">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        <img src="@item.Product.ImageUrl" class="img-fluid rounded-3" alt="@item.Product.Name">
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3">
+                                        <p class="lead fw-normal mb-2">@item.Product.Name</p>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <h5 class="mb-0">@item.Product.Price</h5>x<h5 class="mb-0">@item.Count</h5>
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3 d-flex">
+                                        <button class="btn btn-link px-2 plus-btn" data-id="@item.Id">
+                                            <i class="bi bi-node-plus-fill"></i>
+                                        </button>
+                                        <button class="btn btn-link px-2 minus-btn" data-id="@item.Id">
+                                            <i class="bi bi-node-minus-fill"></i>
+                                        </button>
+                                        <button class="btn btn-link px-2 delete-btn" data-id="@item.Id">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
 
                 <div class="card mb-4">
                     <div class="card-body p-4 d-flex flex-row">
                         <div class="form-outline flex-fill">
                             <label class="form-label">Total (INR)</label>
                         </div>
-                        <label class="ms-3">@Model.OrderHeader.OrderTotal.ToString("C", new System.Globalization.CultureInfo("en-IN"))</label>
+                        <label class="ms-3 total-amount">
+                            @Model.OrderHeader.OrderTotal.ToString("C", new System.Globalization.CultureInfo("en-IN"))
+                        </label>
                     </div>
                 </div>
 
@@ -53,8 +55,95 @@
                         <a asp-action="Summary" class="btn btn-secondary btn-block btn-lg">Order Now</a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $(document).on("click", ".plus-btn", function () {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: "/Customer/Cart/Plus",
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        updateCart(response.cart, response.total);
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", ".minus-btn", function () {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: "/Customer/Cart/Minus",
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        updateCart(response.cart, response.total);
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", ".delete-btn", function () {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: "/Customer/Cart/Delete",
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        updateCart(response.cart, response.total);
+                    }
+                }
+            });
+        });
+
+        function updateCart(cart, total) {
+         
+            var cartContainer = $(".cart-container");
+            cartContainer.empty();
+
+            $.each(cart, function (index, item) {
+                cartContainer.append(`
+                            <div class="card rounded-3 mb-4">
+                                <div class="card-body p-4">
+                                    <div class="row d-flex justify-content-between align-items-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                            <img src="${item.product.imageUrl}" class="img-fluid rounded-3" alt="${item.product.name}">
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <p class="lead fw-normal mb-2">${item.product.name}</p>
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                            <h5 class="mb-0">${item.product.price}</h5>x<h5 class="mb-0">${item.count}</h5>
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3 d-flex">
+                                            <button class="btn btn-link px-2 plus-btn" data-id="${item.id}">
+                                                <i class="bi bi-node-plus-fill"></i>
+                                            </button>
+                                            <button class="btn btn-link px-2 minus-btn" data-id="${item.id}">
+                                                <i class="bi bi-node-minus-fill"></i>
+                                            </button>
+                                            <button class="btn btn-link px-2 delete-btn" data-id="${item.id}">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+            });
+
+            $(".total-amount").text(total.toLocaleString('en-IN', { style: 'currency', currency: 'INR' }));
+        }
+    });
+</script>
+

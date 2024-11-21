@@ -45,17 +45,25 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             }
             return View(vm);
         }
-        public IActionResult plus(int id)
+        [HttpPost]
+        public IActionResult Plus(int id)
         {
             var cart = _cartRepository.GetT(x => x.Id == id);
             _cartRepository.IncrementCartItem(cart, 1);
             _cartRepository.Save();
-            return RedirectToAction(nameof(Index));
+
+            var updatedCart = _cartRepository.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId, includeProperties: "Product");
+            var total = updatedCart.Sum(x => x.Product.Price * x.Count);
+
+            return Json(new { success = true, cart = updatedCart, total });
         }
 
-        public IActionResult minus(int id)
+
+        [HttpPost]
+        public IActionResult Minus(int id)
         {
             var cart = _cartRepository.GetT(x => x.Id == id);
+
             if (cart.Count <= 1)
             {
                 _cartRepository.Delete(cart);
@@ -63,20 +71,30 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             else
             {
                 _cartRepository.DecrementCartItem(cart, 1);
-
             }
+
             _cartRepository.Save();
-            return RedirectToAction(nameof(Index));
+
+            var updatedCart = _cartRepository.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId, includeProperties: "Product");
+            var total = updatedCart.Sum(x => x.Product.Price * x.Count);
+
+            return Json(new { success = true, cart = updatedCart, total });
         }
 
-        public IActionResult delete(int id)
+
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
             var cart = _cartRepository.GetT(x => x.Id == id);
             _cartRepository.Delete(cart);
             _cartRepository.Save();
-            return RedirectToAction(nameof(Index));
 
+            var updatedCart = _cartRepository.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId, includeProperties: "Product");
+            var total = updatedCart.Sum(x => x.Product.Price * x.Count);
+
+            return Json(new { success = true, cart = updatedCart, total });
         }
+
         public IActionResult Summary()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
