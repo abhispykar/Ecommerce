@@ -1,10 +1,10 @@
 ﻿@model List<Product>
 
 <div class="card shadow border-0 my-4">
-    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+    <div class="card-header bg-primary bg-gradient m-lg-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2"> Product List</h2>
+                <h2 class="text-white py-2 product-title">Product List</h2>
             </div>
         </div>
     </div>
@@ -13,7 +13,7 @@
             <div class="col-6">
             </div>
             <div class="col-6 text-end">
-                <a aasp-controller="Products" asp-action="Upsert" class="btn btn-primary">
+                <a asp-controller="Products" asp-action="Upsert" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> Create New Product
                 </a>
             </div>
@@ -22,18 +22,10 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>
-                        Product Name
-                    </th>
-                    <th>
-                        Price
-                    </th>
-                    <th>
-                        Stock
-                    </th>
-                    <th>
-                        Category
-                    </th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,32 +33,37 @@
                 {
                     <tr>
                         <td>@obj.Name</td>
-                        <td>
-                            @obj.Price
-                        </td>
-                        <td>
-                            @obj.Stock
-                        </td>
-                        <td>
-                            @obj.Category.Name
-                        </td>
-
+                        <td>@obj.Price</td>
+                        <td>@obj.Stock</td>
+                        <td>@obj.Category.Name</td>
                         <td>
                             <div class="w-75 btn-group" role="group">
                                 <a asp-controller="Products" asp-action="Upsert" asp-route-id="@obj.ProductId" class="btn btn-primary mx-2">
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </a>
-                                <a asp-controller="Products" asp-action="Delete" asp-route-id="@obj.ProductId" class=" btn btn-danger mx-2">
+                                <a asp-controller="Products" asp-action="Delete" asp-route-id="@obj.ProductId" class="btn btn-danger mx-2">
                                     <i class="bi bi-trash3-fill"></i> Delete
                                 </a>
                             </div>
                         </td>
                     </tr>
                 }
-
             </tbody>
-
         </table>
     </div>
 </div>
-    
+
+@section Scripts {
+    <style>
+        .product-title {
+            color: white; /* Ensure title text is white */
+            font-weight: bold; /* Make the title bold */
+            font-family: 'Arial', sans-serif; /* Change the font */
+        }
+
+        .table thead th {
+            color: black; /* Set table header color to black */
+            font-weight: bold; /* Make table header bold */
+        }
+    </style>
+}

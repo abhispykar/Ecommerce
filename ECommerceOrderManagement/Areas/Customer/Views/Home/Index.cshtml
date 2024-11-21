@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<Product>
+
 <div class="container-fluid">
     <!-- Hero Section with Banner Images -->
-      <section class="hero-section bg-light py-5">
+    <section class="hero-section bg-light py-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
@@ -28,25 +29,44 @@
                 <span class="visually-hidden">Next</span>
             </a>
         </div>
-    </section> 
+    </section>
 
     <!-- Categories Section -->
     <section class="categories py-5">
         <div class="container text-center">
-            <h2 class="mb-4">Shop by Categories</h2>
+            <h2 class="section-title mb-4">Shop by Categories</h2>
             <a asp-action="Categories" asp-controller="Home" class="btn btn-outline-primary btn-lg">
                 Explore Categories
             </a>
         </div>
     </section>
 
-    
+   
 
     <!-- Products Section -->
     <section class="trending-products py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-4">Shop by Products</h2>
+            <h2 class="section-title text-center mb-4">Shop by Products</h2>
+            <!-- Sorting Options -->
+            <div class="d-flex justify-content-end mb-4">
+                <form method="get" class="d-flex align-items-center">
+                    <label for="sortColumn" class="mr-2">sortBy:</label>
+                    <select id="sortColumn" name="sortColumn" class="form-control mx-2">
+                        <option value="Name">Name</option>
+                        <option value="Price">Price</option>
+                    </select>
+                    <label for="isAscending" class="mr-2">order:</label>
+                    <select id="isAscending" name="isAscending" class="form-control mx-2">
+                        <option value="true">Asc</option>
+                        <option value="false">Desc</option>
+                    </select>
+                    <button type="submit" class="btn btn-info text-white mx-2">
+                        <i class="fas fa-sort"></i> Sort
+                    </button>
+                </form>
+            </div>
             <div class="d-flex flex-wrap justify-content-center">
+
                 @foreach (var product in Model)
                 {
                     <a asp-action="Details" asp-controller="Home" asp-route-ProductId="@product.ProductId" class="card card-hover m-2 p-3" style="text-decoration:none">
@@ -65,10 +85,23 @@
             </div>
         </div>
     </section>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i&pageSize=10&sortColumn=@ViewBag.SortColumn&isAscending=@ViewBag.IsAscending">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+
     <!-- Special Offers Section -->
     <section class="special-offers py-5">
         <div class="container">
-            <h2 class="text-center mb-4">Special Offers</h2>
+            <h2 class="section-title text-center mb-4">Special Offers</h2>
             <div class="row">
                 @for (int i = 1; i <= 3; i++)
                 {
@@ -91,10 +124,11 @@
             </div>
         </div>
     </section>
+
     <!-- Customer Reviews -->
     <section class="customer-reviews py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-4">What Our Customers Say</h2>
+            <h2 class="section-title text-center mb-4">What Our Customers Say</h2>
             <div class="row">
                 @for (int i = 1; i <= 3; i++)
                 {
@@ -123,5 +157,41 @@
                 transform: translateY(-5px);
                 box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             }
+
+        .section-title {
+            background-color: #006699;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .btn-info {
+            background-color: #006699;
+            border-color: #17a2b8;
+        }
+
+            .btn-info:hover {
+                background-color: #138496;
+                border-color: #117a8b;
+            }
+
+        .form-inline {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+            .form-inline label {
+                margin-right: 0.5rem;
+            }
+
+            .form-inline .form-control {
+                margin-right: 0.5rem;
+            }
+
+            .form-inline .btn {
+                margin-left: 0.5rem;
+            }
+
     </style>
 }

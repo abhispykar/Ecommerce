@@ -98,5 +98,29 @@ namespace EOMS.DataAccess.Repository
             }
             return query.FirstOrDefault();
         }
+
+        public IEnumerable<T> GetAllPagedAndSorted(int pageNumber, int pageSize, string sortColumn, bool isAscending, Expression<Func<T, bool>>? predicate = null, string? includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProperty in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+
+            query = isAscending
+                ? query.OrderBy(e => EF.Property<object>(e, sortColumn))
+                : query.OrderByDescending(e => EF.Property<object>(e, sortColumn));
+
+            return query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+        }
     }
 }

@@ -30,11 +30,26 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             _orderDetailRepository = orderDetailRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 12, string sortColumn = "Name", bool isAscending = true)
         {
-            IEnumerable<Product> productList = _productRepository.GetAll(includeProperties: "Category");
-            return View(productList);
+            var products = _productRepository.GetAllPagedAndSorted(
+                includeProperties: "Category",
+                pageNumber: pageNumber,
+                pageSize: pageSize,
+                sortColumn: sortColumn,
+                isAscending: isAscending
+            );
+
+            var totalProducts = _productRepository.GetAll().Count();
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+            ViewBag.SortColumn = sortColumn;
+            ViewBag.IsAscending = isAscending;
+
+            return View(products);
         }
+
 
         [HttpGet]
         public IActionResult Details(int? ProductId)
