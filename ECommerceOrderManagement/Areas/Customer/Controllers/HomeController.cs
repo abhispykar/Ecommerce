@@ -30,7 +30,7 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             _orderDetailRepository = orderDetailRepository;
         }
 
-        public IActionResult Index(int pageNumber = 1, int pageSize = 12, string sortColumn = "Name", bool isAscending = true)
+        public IActionResult Index(int pageNumber = 1, int pageSize = 10, string sortColumn = "Name", bool isAscending = true)
         {
             var products = _productRepository.GetAllPagedAndSorted(
                 includeProperties: "Category",
