@@ -46,7 +46,6 @@ public class ProductsController : Controller
         }
         else
         {
-            // update
             productVM.Product = _productRepository.Get(u => u.ProductId == id);
             return View(productVM);
         }

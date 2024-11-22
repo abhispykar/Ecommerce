@@ -18,8 +18,10 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
         private readonly IOrderHeaderRepository _orderHeaderRepository;
         private readonly IOrderDetailRepository _orderDetailRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly IBannerRepository _bannerRepository;
 
-        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ICartRepository cartRepository, IOrderHeaderRepository orderHeaderRepository, IOrderDetailRepository orderDetailRepository
+
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ICartRepository cartRepository, IOrderHeaderRepository orderHeaderRepository, IOrderDetailRepository orderDetailRepository, IBannerRepository bannerRepository
             )
         {
             _logger = logger;
@@ -28,6 +30,8 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
             _cartRepository = cartRepository;
             _orderHeaderRepository = orderHeaderRepository;
             _orderDetailRepository = orderDetailRepository;
+            _bannerRepository = bannerRepository;
+
         }
 
         public IActionResult Index(int pageNumber = 1, int pageSize = 10, string sortColumn = "Name", bool isAscending = true)
@@ -42,12 +46,19 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
 
             var totalProducts = _productRepository.GetAll().Count();
 
-            ViewBag.CurrentPage = pageNumber;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
-            ViewBag.SortColumn = sortColumn;
-            ViewBag.IsAscending = isAscending;
+            var banners = _bannerRepository.GetAll(b => b.IsActive).ToList(); 
 
-            return View(products);
+            var viewModel = new HomeIndexVM
+            {
+                Products = products,
+                Banners = banners,
+                CurrentPage = pageNumber,
+                TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize),
+                SortColumn = sortColumn,
+                IsAscending = isAscending
+            };
+
+            return View(viewModel);
         }
 
 

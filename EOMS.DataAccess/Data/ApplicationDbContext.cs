@@ -17,6 +17,7 @@ namespace EOMS.DataAccess.Data
         public DbSet<Cart> Carts { get; set; }
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Banner> Banner { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

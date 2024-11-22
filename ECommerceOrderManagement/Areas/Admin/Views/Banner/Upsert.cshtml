@@ -1,0 +1,53 @@
+﻿@model Banner
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="mb-0">Upload Banner Image</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Upsert" enctype="multipart/form-data" method="post">
+                <div class="form-group mb-3">
+                    <label for="file" class="form-label">Upload Image</label>
+                    <input type="file" class="form-control" id="file" name="file" />
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" asp-for="IsActive" class="form-check-input" id="isActive" name="IsActive" />
+                    <label class="form-check-label" for="isActive">Is Active</label>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-block">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <style>
+        .container {
+            max-width: 600px;
+        }
+
+        .card {
+            border-radius: 10px;
+        }
+
+        .card-header {
+            border-radius: 10px 10px 0 0;
+        }
+
+        .btn-success {
+            font-size: 1.2rem;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-check-input {
+            margin-right: 10px;
+        }
+    </style>
+}

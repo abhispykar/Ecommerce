@@ -1,24 +1,22 @@
-﻿@model IEnumerable<Product>
+﻿@model HomeIndexVM
 
 <div class="container-fluid">
-    <!-- Hero Section with Banner Images -->
     <section class="hero-section bg-light py-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                @for (int i = 0; i < Model.Banners.Count(); i++)
+                {
+                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+                }
             </ol>
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="~/images/HP_Rotating_AP_18Nov2024_vithxu.webp" class="d-block w-100" alt="Banner 1">
-                </div>
-                <div class="carousel-item">
-                    <img src="~/images/HP_Rotating_Geyser_18Nov2024_uo8tu3.webp" class="d-block w-100" alt="Banner 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="~/images/HP_Rotating_pixel_18Nov2024_pfayfv.webp" class="d-block w-100" alt="Banner 3">
-                </div>
+                @for (int i = 0; i < Model.Banners.Count(); i++)
+                {
+                    var banner = Model.Banners[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <img src="@banner.ImageUrl" class="w-100 align-content-center" style="height:400px"/>
+                    </div>
+                }
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -66,8 +64,7 @@
                 </form>
             </div>
             <div class="d-flex flex-wrap justify-content-center">
-
-                @foreach (var product in Model)
+                @foreach (var product in Model.Products)
                 {
                     <a asp-action="Details" asp-controller="Home" asp-route-ProductId="@product.ProductId" class="card card-hover m-2 p-3" style="text-decoration:none">
                         <div class="" style="width:12rem;">
@@ -83,16 +80,16 @@
                     </a>
                 }
             </div>
-        </div>
     </section>
 
     <!-- Pagination -->
     <nav aria-label="Page navigation" class="mt-4">
         <ul class="pagination justify-content-center">
-            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            @for (int i = 1; i <= Model.TotalPages; i++)
             {
-                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
-                    <a class="page-link" href="?pageNumber=@i&pageSize=10&sortColumn=@ViewBag.SortColumn&isAscending=@ViewBag.IsAscending">@i</a>
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i&pageSize=10&sortColumn=@Model.SortColumn&isAscending=@Model
+.IsAscending">@i</a>
                 </li>
             }
         </ul>

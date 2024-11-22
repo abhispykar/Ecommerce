@@ -60,9 +60,17 @@
                         </li>
                         @if (User.IsInRole(SD.Role_Admin))
                         {
-                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a> </li>
-                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a> </li>
-                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a> </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Manage
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Banner" asp-action="Index">Banners</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a></li>
+                                </ul>
+                            </li>
                         }
                     </ul>
                     <form class="d-flex" asp-controller="Home" asp-action="Search">
@@ -89,3 +97,23 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<style>
+    
+    .navbar-nav .nav-link {
+        color: white !important; 
+    }
+
+    .dropdown-menu {
+        background-color: #006699; 
+    }
+
+        .dropdown-menu .dropdown-item {
+            color: white !important; 
+        }
+
+            .dropdown-menu .dropdown-item:hover {
+                background-color: #006699; 
+                color: white; 
+            }
+</style>
+
