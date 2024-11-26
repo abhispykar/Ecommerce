@@ -2,6 +2,7 @@ using EOMS.DataAccess.Repository;
 using EOMS.DataAccess.Repository.IRepository;
 using EOMS.Models;
 using EOMS.Models.ViewModels;
+using EOMS.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -80,7 +81,7 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = SD.Role_Customer)]
         public IActionResult Details(Cart cart)
         {
             if (ModelState.IsValid)
@@ -93,13 +94,14 @@ namespace ECommerceOrderManagement.Areas.Customer.Controllers
                 if (cartItem == null)
                 {
                     _cartRepository.Add(cart);
+                    TempData["success"] = "Added to Cart";
                 }
                 else
                 {
                     _cartRepository.IncrementCartItem(cartItem, cart.Count);
                 }
                 _cartRepository.Save();
-                TempData["success"] = "Added to Cart";
+              
             }
 
             cart.Product = _productRepository.GetT(x => x.ProductId == cart.ProductId, includeProperties: "Category");

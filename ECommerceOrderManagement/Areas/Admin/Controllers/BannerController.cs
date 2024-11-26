@@ -95,21 +95,6 @@ namespace ECommerceOrderManagement.Areas.Admin.Controllers
             return View(banner);
         }
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Banner bannerFromDb = _bannerRepository.Get(b => b.Id == id);
-            if (bannerFromDb == null)
-            {
-                return NotFound();
-            }
-
-            return View(bannerFromDb);
-        }
-
         [HttpPost,ActionName("Delete")]
         public IActionResult Delete(int id)
         {

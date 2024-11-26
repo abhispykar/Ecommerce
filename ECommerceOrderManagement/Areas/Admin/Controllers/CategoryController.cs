@@ -14,9 +14,9 @@ namespace ECommerceOrderManagement.Areas.Admin.Controllers
     {
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryController(ICategoryRepository db)
+        public CategoryController(ICategoryRepository categoryRepository)
         {
-            _categoryRepository = db;
+            _categoryRepository = categoryRepository;
         }
         public IActionResult Index()
         {

@@ -14,7 +14,7 @@
                 {
                     var banner = Model.Banners[i];
                     <div class="carousel-item @(i == 0 ? "active" : "")">
-                        <img src="@banner.ImageUrl" class="w-100 align-content-center" style="height:400px"/>
+                        <img src="@banner.ImageUrl" class="w-100 align-content-center carousel-image" />
                     </div>
                 }
             </div>
@@ -144,51 +144,8 @@
     </section>
 </div>
 
+
+
 @section Scripts {
-    <style>
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-            .card-hover:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            }
-
-        .section-title {
-            background-color: #006699;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .btn-info {
-            background-color: #006699;
-            border-color: #17a2b8;
-        }
-
-            .btn-info:hover {
-                background-color: #138496;
-                border-color: #117a8b;
-            }
-
-        .form-inline {
-            display: flex;
-            flex-wrap: nowrap;
-            align-items: center;
-        }
-
-            .form-inline label {
-                margin-right: 0.5rem;
-            }
-
-            .form-inline .form-control {
-                margin-right: 0.5rem;
-            }
-
-            .form-inline .btn {
-                margin-left: 0.5rem;
-            }
-
-    </style>
+    <link rel="stylesheet" href="~/css/carousel.css" />    
 }
