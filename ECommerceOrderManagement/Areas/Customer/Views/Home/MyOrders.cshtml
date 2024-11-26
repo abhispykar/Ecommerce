@@ -1,0 +1,123 @@
+﻿@model List<EOMS.Models.ViewModels.OrderVM>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- Font Awesome for icons -->
+    <style>
+        .card {
+            padding: 10px;
+            margin: 10px;
+            background-color: #f8f9fa; /* Light grey background */
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card-header {
+            background-color: #e9ecef; /* Slightly darker grey for header */
+            color: #333; /* Darker text color */
+        }
+
+            .card-header h5 {
+                font-size: 1.25rem; /* Highlight the heading */
+                font-weight: bold;
+            }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+
+        .btn-group .btn i {
+            font-size: 1.25rem; /* Larger icons */
+        }
+
+        .badge {
+            font-size: 1.25rem; /* Larger font size for badges */
+            padding: 10px; /* Extra padding for badges */
+        }
+
+        h2.title {
+            font-size: 2.5rem; /* Change font size */
+            font-family: 'Arial', sans-serif; /* Change font */
+            color: #333; /* Darker text color */
+            text-align: center; /* Center align */
+            font-weight: bold; /* Bold text */
+            background-color: #e9ecef; /* Light grey background */
+            padding: 10px; /* Padding around text */
+            border-radius: 5px; /* Rounded corners */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="title mb-4">My Orders</h2>
+        <div class="row">
+            @foreach (var order in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Order No. @order.OrderHeader.Id</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Customer:</strong> @order.OrderHeader.ApplicationUser.Name</p>
+                            <p class="card-text"><strong>Total:</strong> @order.OrderHeader.OrderTotal.ToString("C", new System.Globalization.CultureInfo("en-IN"))</p>
+                            <p class="card-text">
+                                <strong>Status:</strong>
+                                <span class="badge badge-pill" id="ProductId+@order.OrderHeader.Id">
+                                    @if (order.OrderHeader.OrderStatus == OrderStatus.Processed)
+                                    {
+                                        <span class="badge badge-warning"><i class="fas fa-cog"></i> Processed</span>
+                                    }
+                                    else if (order.OrderHeader.OrderStatus == OrderStatus.Shipped)
+                                    {
+                                        <span class="badge badge-primary"><i class="fas fa-shipping-fast"></i> Shipped</span>
+                                    }
+                                    else if (order.OrderHeader.OrderStatus == OrderStatus.Delivered)
+                                    {
+                                        <span class="badge badge-success"><i class="fas fa-box"></i> Delivered</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-secondary"><i class="fas fa-hourglass-half"></i> @order.OrderHeader.OrderStatus</span>
+                                    }
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+    <script>
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/orderStatusHub")
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+        connection.on("ReceiveStatusUpdate", function (status, orderItemId) {
+                alert("Your Order status has been updated to:   " + status);
+                let statusElement = document.getElementById("ProductId+" + orderItemId);
+                if (status === "Processed") {
+                 statusElement.innerHTML = '<span class="badge badge-warning"><i class="fas fa-cog"></i> Processed</span>';
+                } else if (status === "Shipped") {
+                        statusElement.innerHTML = '<span class="badge badge-primary"><i class="fas fa-shipping-fast"></i> Shipped</span>';
+                } else if (status === "Delivered") {
+                    statusElement.innerHTML = '<span class="badge badge-success"><i class="fas fa-box"></i> Delivered</span>';
+                } else {
+                    statusElement.innerHTML = '<span class="badge badge-secondary"><i class="fas fa-hourglass-half"></i> ' + status + '</span>';
+                    }
+                });
+
+                connection.start().catch(function (err) {
+                    return console.error(err.toString());
+                });
+    </script>
+</body>
+</html>

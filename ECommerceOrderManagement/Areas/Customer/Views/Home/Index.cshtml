@@ -1,0 +1,151 @@
+﻿@model HomeIndexVM
+
+<div class="container-fluid">
+    <section class="hero-section bg-light py-5">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <ol class="carousel-indicators">
+                @for (int i = 0; i < Model.Banners.Count(); i++)
+                {
+                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+                }
+            </ol>
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.Banners.Count(); i++)
+                {
+                    var banner = Model.Banners[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <img src="@banner.ImageUrl" class="w-100 align-content-center carousel-image" />
+                    </div>
+                }
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories py-5">
+        <div class="container text-center">
+            <h2 class="section-title mb-4">Shop by Categories</h2>
+            <a asp-action="Categories" asp-controller="Home" class="btn btn-outline-primary btn-lg">
+                Explore Categories
+            </a>
+        </div>
+    </section>
+
+   
+
+    <!-- Products Section -->
+    <section class="trending-products py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Shop by Products</h2>
+            <!-- Sorting Options -->
+            <div class="d-flex justify-content-end mb-4">
+                <form method="get" class="d-flex align-items-center">
+                    <label for="sortColumn" class="mr-2">sortBy:</label>
+                    <select id="sortColumn" name="sortColumn" class="form-control mx-2">
+                        <option value="Name">Name</option>
+                        <option value="Price">Price</option>
+                    </select>
+                    <label for="isAscending" class="mr-2">order:</label>
+                    <select id="isAscending" name="isAscending" class="form-control mx-2">
+                        <option value="true">Asc</option>
+                        <option value="false">Desc</option>
+                    </select>
+                    <button type="submit" class="btn btn-info text-white mx-2">
+                        <i class="fas fa-sort"></i> Sort
+                    </button>
+                </form>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center">
+                @foreach (var product in Model.Products)
+                {
+                    <a asp-action="Details" asp-controller="Home" asp-route-ProductId="@product.ProductId" class="card card-hover m-2 p-3" style="text-decoration:none">
+                        <div class="" style="width:12rem;">
+                            <img src="@product.ImageUrl" class="card-img-top" alt="Product" style="object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
+                                <p class="card-title h5 text-dark text-uppercase text-center mb-3 text-truncate">@product.Name</p>
+                                <p class="card-title h5 text-dark text-center mb-3">₹ @product.Price</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">⭐⭐⭐⭐⭐</small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+    </section>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i&pageSize=10&sortColumn=@Model.SortColumn&isAscending=@Model
+.IsAscending">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+    <!-- Special Offers Section -->
+    <section class="special-offers py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Special Offers</h2>
+            <div class="row">
+                @for (int i = 1; i <= 3; i++)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-header bg-danger text-white">
+                                Limited Time Offer
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Special Offer @i</h5>
+                                <p class="card-text">Get up to @(i * 10)% off on selected items!</p>
+                                <a href="#" class="btn btn-primary">Shop Now</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Ends in: 2d 5h 30m
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="customer-reviews py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">What Our Customers Say</h2>
+            <div class="row">
+                @for (int i = 1; i <= 3; i++)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Customer @i</h5>
+                                <p class="card-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet."</p>
+                                <p class="text-muted">⭐⭐⭐⭐⭐</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+@section Scripts {
+    <link rel="stylesheet" href="~/css/carousel.css" />    
+}

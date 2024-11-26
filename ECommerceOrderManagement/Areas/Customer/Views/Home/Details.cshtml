@@ -1,0 +1,42 @@
+﻿@model Cart
+
+<form method="post" class="d-flex flex-column align-items-center">
+    <div class="row align-items-start w-100 mt-4">
+        <!-- Added margin-top class here -->
+        <!-- Large Product Image -->
+        <div class="col-md-6 text-center mt-4">
+            <!-- Added margin-top class here -->
+            <img src="@Model.Product.ImageUrl" class="img-fluid border" style="max-width: 100%; height: auto;" alt="Product Image" />
+            <input type="hidden" asp-for="ProductId" />
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6 mt-4">
+            <!-- Added margin-top class here -->
+            <!-- Product Name -->
+            <h2 class="fw-bold text-dark text-center">@Model.Product.Name</h2>
+
+            <!-- Product Price -->
+            <p class="h4 text-success fw-bold mb-3 text-center">₹@Model.Product.Price</p>
+
+            <!-- Additional Product Details -->
+            <ul class="list-unstyled text-center">
+                <li><span class="fw-bold">Stock:</span> @Model.Product.Stock</li>
+                <li><span class="fw-bold">Category:</span> @Model.Product.Category.Name</li>
+            </ul>
+
+            <!-- Quantity Input -->
+            <div class="mb-3 d-flex justify-content-center">
+                <label asp-for="Count" class="form-label fw-bold me-2">Quantity:</label>
+                <input asp-for="Count" class="form-control" style="width: 100px;" />
+                <span asp-validation-for="Count" class="text-danger small"></span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-4 d-flex justify-content-center gap-2">
+                <a class="btn btn-outline-primary btn-lg" asp-action="Index" asp-controller="Home">Back</a>
+                <button type="submit" class="btn btn-primary btn-lg" asp-action="Details">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</form>
