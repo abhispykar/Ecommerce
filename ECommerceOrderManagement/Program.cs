@@ -80,6 +80,6 @@ app.MapAreaControllerRoute(
 );
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapHub<OrderStatusChangedHub>("/orderStatusHub");
+    endpoints.MapHub<SignalR>("/orderStatusHub");
 });
 app.Run();

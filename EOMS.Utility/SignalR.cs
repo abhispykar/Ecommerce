@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EOMS.Utility
 {
-    public class OrderStatusChangedHub : Hub
+    public class SignalR : Hub
     {
         public async Task SendOrderStatusUpdate(string userId, string orderStatus, int OrderHeaderId )
         {

@@ -17,10 +17,10 @@ namespace ECommerceOrderManagement.Areas.Admin.Controllers
     {
         private readonly IOrderHeaderRepository _orderHeaderRepository;
         private readonly IOrderDetailRepository _orderDetailRepository;
-        private readonly IHubContext<OrderStatusChangedHub> _hubContext;
+        private readonly IHubContext<SignalR> _hubContext;
        
 
-        public OrderController(IOrderHeaderRepository orderHeaderRepository, IOrderDetailRepository orderDetailRepository, IHubContext<OrderStatusChangedHub> hubContext)
+        public OrderController(IOrderHeaderRepository orderHeaderRepository, IOrderDetailRepository orderDetailRepository, IHubContext<SignalR> hubContext)
         {
             _orderHeaderRepository = orderHeaderRepository;
             _orderDetailRepository = orderDetailRepository;

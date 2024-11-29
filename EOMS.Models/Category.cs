@@ -10,9 +10,10 @@ namespace EOMS.Models
         [Required]
         [MaxLength(20)]
         [DisplayName("Category Name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [DisplayName("Display Order")]
         [Range(1, 100)]
+        [Required]
         public int DisplayOrder { get; set; }
     }
 }
